@@ -5,6 +5,7 @@ const AuthContext = createContext({});
 function AuthProvider({ children }) {
 	const [user, setUser] = useState(null);
 	const [token, setToken] = useState(null);
+	const [active, setActive] = useState('Entrar');
 	const config = {
 		headers: {
 			Authorization: `Bearer ${token}`,
@@ -12,7 +13,7 @@ function AuthProvider({ children }) {
 	};
 
 	return (
-		<AuthContext.Provider value={{ user, config, setUser, setToken }}>
+		<AuthContext.Provider value={{ user, config, active, setUser, setToken, setActive }}>
 			{children}
 		</AuthContext.Provider>
 	);
