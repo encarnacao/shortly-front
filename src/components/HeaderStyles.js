@@ -24,7 +24,7 @@ const HeaderContainer = styled.header`
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	width: 100vw;
+	width: 100%;
 	max-width: 80%;
 	height: 25%;
 	max-height: 250px;

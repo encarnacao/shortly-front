@@ -79,7 +79,7 @@ const BoardContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	width: 100vw;
+	width: 100%;
 	height: 100%;
 `;
 
@@ -92,7 +92,7 @@ const Board = styled.div`
 	border: 1px solid rgba(120, 177, 89, 0.25);
 	box-shadow: 0px 4px 24px rgba(120, 177, 89, 0.12);
 	border-radius: 24px 24px 0px 0px;
-    word-wrap: break-word;
+	word-wrap: break-word;
 	> ol {
 		font-weight: 400;
 		font-size: 22px;
