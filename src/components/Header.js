@@ -1,4 +1,4 @@
-import { Title, Logo, HeaderContainer, Menu, SubHeader } from "./HeaderStyles";
+import { Title, Logo, HeaderContainer, Menu, SubHeader } from "../styles/HeaderStyles";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/authContext";
 import { useNavigate } from "react-router-dom";
