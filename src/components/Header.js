@@ -1,4 +1,10 @@
-import { Title, Logo, HeaderContainer, Menu, SubHeader } from "../styles/HeaderStyles";
+import {
+	Title,
+	Logo,
+	HeaderContainer,
+	Menu,
+	SubHeader,
+} from "../styles/HeaderStyles";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/authContext";
 import { useNavigate } from "react-router-dom";
@@ -11,7 +17,8 @@ function setClass(item, active) {
 }
 
 function Header() {
-	const { active, setActive, user } = useContext(AuthContext);
+	const { active, setActive, user, setUser, setToken } =
+		useContext(AuthContext);
 	const routes = {
 		Home: "/",
 		Ranking: "/ranking",
@@ -24,6 +31,15 @@ function Header() {
 		: ["Entrar", "Cadastrar-se"];
 
 	const navigate = useNavigate();
+
+	function checkLogout(item) {
+		if (item === "Sair") {
+			setUser(null);
+			setToken(null);
+			setActive("Entrar");
+			navigate(routes[item]);
+		}
+	}
 
 	const welcomeMessage = `Seja bem-vindo(a), ${user}!`;
 	return (
@@ -39,6 +55,7 @@ function Header() {
 								onClick={() => {
 									setActive(item);
 									navigate(routes[item]);
+									checkLogout(item);
 								}}
 							>
 								{item}
@@ -47,7 +64,12 @@ function Header() {
 					})}
 				</Menu>
 			</SubHeader>
-			<Logo>
+			<Logo
+				onClick={() => {
+					navigate("/");
+					user ? setActive("Home") : setActive("Entrar");
+				}}
+			>
 				<Title>Shortly</Title>
 				<img src={logo} alt="Shortly Logo" />
 			</Logo>
