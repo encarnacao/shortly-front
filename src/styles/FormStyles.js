@@ -24,6 +24,9 @@ const TextInput = styled.input`
 `;
 
 const ConfirmButton = styled.button`
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	width: 182px;
 	height: 60px;
 	background: #5d9040;
@@ -36,6 +39,9 @@ const ConfirmButton = styled.button`
 	&:hover {
 		cursor: pointer;
 		filter: brightness(1.1);
+	}
+	&:disabled{
+		filter: opacity(0.7);
 	}
 `;
 
