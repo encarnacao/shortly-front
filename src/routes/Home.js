@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import LinkInput from "../components/LinkInput";
@@ -9,29 +10,27 @@ import { AuthContext } from "../contexts/authContext";
 function LoggedOn() {
 	const [links, setLinks] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const { config } = useContext(AuthContext);
 	useEffect(() => {
-		setLinks([
-			{
-				id: 1,
-				url: "https://www.google.com",
-				shortUrl: "g1",
-				visitCount: 1000,
-			},
-			{
-				id: 2,
-				url: "https://www.youtube.com",
-				shortUrl: "y1",
-				visitCount: 999,
-			},
-			{
-				id: 3,
-				url: "https://www.facebook.com",
-				shortUrl: "f1",
-				visitCount: 998,
-			},
-		]);
+		async function getData() {
+			try {
+				const { data } = await axios.get("/users/me", config);
+				const links = data.shortenedUrls;
+				if (links[0].id) {
+					setLinks(links);
+				} else {
+					setLinks([]);
+				}
+			} catch (e) {
+				console.log(e);
+				alert(
+					"Houve um erro ao obter os links. Por favor, atualize a página."
+				);
+			}
+		}
+		getData();
 		setLoading(false);
-	}, []);
+	}, [config]);
 	if (loading) return <Loading />;
 	return (
 		<>
