@@ -30,10 +30,15 @@ function LinkItem({ id, url, code, views }) {
 		setLoading(false);
 	}
 
+	async function copyToClipboard(){
+		const url = window.location.href + code;
+		await navigator.clipboard.writeText(url);
+	}
+
 	return (
 		<ListItem>
 			<div>
-				<IoIosCopy />
+				<IoIosCopy onClick={copyToClipboard}/>
 			</div>
 			<div>
 				<p className="url">{url}</p>
