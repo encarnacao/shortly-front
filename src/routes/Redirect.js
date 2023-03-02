@@ -17,8 +17,8 @@ function Redirect() {
             } catch(e){
                 console.log(e);
                 alert("Erro ao redirecionar");
-                navigate("/");
                 setRedirect(false);
+                navigate("/");
             }
         }
         setRedirect(true);
