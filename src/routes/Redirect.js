@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../components/Loading";
@@ -10,20 +9,8 @@ function Redirect() {
     const navigate = useNavigate();
     console.log(shortUrl);
     useEffect(() => {
-        async function getLink() {
-            try{
-                await axios.get("urls/open/"+shortUrl);
-                window.location.href = process.env.REACT_APP_API_URL+"urls/open/"+ shortUrl;
-            } catch(e){
-                console.log(e);
-                alert("Erro ao redirecionar");
-                setRedirect(false);
-                navigate("/");
-            }
-        }
+        window.location.href = process.env.REACT_APP_API_URL+"urls/open/"+ shortUrl;
         setRedirect(true);
-        getLink();
-        
     }, [setRedirect, shortUrl, navigate]);
 	return <Loading />;
 }
