@@ -12,20 +12,20 @@ function LoggedOn() {
 			{
 				id: 1,
 				url: "https://www.google.com",
-				code: "g1",
-				views: 1000,
+				shortUrl: "g1",
+				visitCount: 1000,
 			},
 			{
 				id: 2,
 				url: "https://www.youtube.com",
-				code: "y1",
-				views: 999,
+				shortUrl: "y1",
+				visitCount: 999,
 			},
 			{
 				id: 3,
 				url: "https://www.facebook.com",
-				code: "f1",
-				views: 998,
+				shortUrl: "f1",
+				visitCount: 998,
 			},
 		]);
 	}, []);
