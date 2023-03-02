@@ -9,6 +9,7 @@ function AuthProvider({ children }) {
 	const [token, setToken] = useStickyState("", "token");
 	const [active, setActive] = useState("Entrar");
 	const [links, setLinks] = useState([]);
+	const [redirect, setRedirect] = useState(false);
 
 	const config = {
 		headers: {
@@ -47,8 +48,10 @@ function AuthProvider({ children }) {
 				links,
 				config,
 				active,
+				redirect,
 				setToken,
 				setUser,
+				setRedirect,
 				setActive,
 				getData,
 				logout,

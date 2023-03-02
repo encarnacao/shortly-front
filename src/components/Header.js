@@ -17,8 +17,7 @@ function setClass(item, active) {
 }
 
 function Header() {
-	const { active, setActive, user, logout } =
-		useContext(AuthContext);
+	const { active, setActive, user, logout, redirect } = useContext(AuthContext);
 	const routes = {
 		Home: "/",
 		Ranking: "/ranking",
@@ -26,7 +25,9 @@ function Header() {
 		"Cadastrar-se": "/signup",
 		Sair: "/",
 	};
-	const menu = user
+	const menu = redirect
+		? []
+		: user
 		? ["Home", "Ranking", "Sair"]
 		: ["Entrar", "Cadastrar-se"];
 
