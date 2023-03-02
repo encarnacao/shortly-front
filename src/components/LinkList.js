@@ -1,14 +1,18 @@
 import styled from "styled-components";
 import LinkItem from "./LinkItem";
 
-function LinkList({links}) {
-	
+function LinkList({ links }) {
 	return (
 		<LinkListContainer>
 			<List>
 				{links.map((link) => {
 					return (
-						<LinkItem key={link.id} url={link.url} code={link.code} views={link.views} />
+						<LinkItem
+							key={link.id}
+							url={link.url}
+							code={link.shortUrl}
+							views={link.visitCount}
+						/>
 					);
 				})}
 			</List>
