@@ -10,6 +10,7 @@ function LinkList({ links }) {
 					return (
 						<LinkItem
 							key={link.id}
+							id={link.id}
 							url={link.url}
 							code={link.shortUrl}
 							views={link.visitCount}
@@ -24,7 +25,7 @@ function LinkList({ links }) {
 const LinkListContainer = styled.div`
 	width: 100%;
 	margin: 0 auto;
-	>h2{
+	> h2 {
 		text-align: center;
 		margin: 100px auto;
 		font-size: 36px;

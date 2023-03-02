@@ -4,10 +4,29 @@ import {
 	HiOutlineCheckCircle,
 	HiOutlineXCircle,
 } from "react-icons/hi2";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../contexts/authContext";
+import { ThreeDots } from "react-loader-spinner";
+import axios from "axios";
 
-function LinkItem({ url, code, views }) {
+function LinkItem({ id, url, code, views }) {
 	const [remove, setRemove] = useState(false);
+	const [loading, setLoading] = useState(false);
+	const { config, getData } = useContext(AuthContext);
+
+	async function removeLink() {
+		setLoading(true);
+		try {
+			await axios.delete("/urls/" + id, config);
+			getData();
+		} catch (e) {
+			console.log(e);
+			alert(
+				"Houve um erro ao deletar o link. Por favor, tente novamente."
+			);
+		}
+		setLoading(false);
+	}
 
 	return (
 		<ListItem>
@@ -16,7 +35,7 @@ function LinkItem({ url, code, views }) {
 				<span className="code">{code}</span>
 				<span className="hits">Quantidade de visitantes: {views}</span>
 			</div>
-			<div>
+			<div>{loading ? <Dots /> : <>
 				<CancelIcon
 					remove={remove ? 1 : 0}
 					onClick={() => setRemove(false)}
@@ -27,9 +46,9 @@ function LinkItem({ url, code, views }) {
 				/>
 				<ConfirmIcon
 					remove={remove ? 1 : 0}
-					onClick={() => setRemove(false)}
+					onClick={removeLink}
 				/>
-			</div>
+			</>}</div>
 		</ListItem>
 	);
 }
@@ -66,6 +85,7 @@ const ListItem = styled.li`
 		border-radius: 0px 12px 12px 0px;
 		> svg {
 			font-size: 30px;
+			cursor: pointer;
 		}
 	}
 `;
@@ -79,16 +99,31 @@ const TrashIcon = styled(HiTrash)`
 
 const ConfirmIcon = styled(HiOutlineCheckCircle)`
 	visibility: ${(props) => (props.remove ? "visible" : "hidden")};
-    color: #80cc74;
+	color: #80cc74;
 	opacity: ${(props) => (props.remove ? 1 : 0)};
 	transition: visibility 0.1s, opacity 0.1s linear;
 `;
 
 const CancelIcon = styled(HiOutlineXCircle)`
 	visibility: ${(props) => (props.remove ? "visible" : "hidden")};
-    color: #ff5555;
+	color: #ff5555;
 	opacity: ${(props) => (props.remove ? 1 : 0)};
 	transition: visibility 0.1s, opacity 0.1s linear;
 `;
+
+const Dots = () => {
+	return (
+		<ThreeDots
+			height="50"
+			width="50"
+			radius="9"
+			color="#cf1800"
+			ariaLabel="three-dots-loading"
+			wrapperStyle={{}}
+			wrapperClassName=""
+			visible={true}
+		/>
+	);
+};
 
 export default LinkItem;
