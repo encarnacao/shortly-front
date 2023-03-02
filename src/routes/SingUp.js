@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
@@ -8,7 +9,7 @@ function SignUp() {
 		name: "",
 		email: "",
 		password: "",
-		passwordConfirm: "",
+		confirmPassword: "",
 	});
 	const [error, setError] = useState("");
 	const [loading, setLoading] = useState(false);
@@ -20,21 +21,28 @@ function SignUp() {
 	}
 
 	function checkError() {
-		if (body.password !== body.passwordConfirm) {
+		if (body.password !== body.confirmPassword) {
 			setError(true);
 			return true;
 		}
 		return false;
 	}
 
-	function handleSubmit(e) {
+	async function handleSubmit(e) {
 		e.preventDefault();
 		setLoading(true);
 		if (checkError()) {
 			setLoading(false);
 			return;
 		}
-		console.log(body);
+		try {
+			await axios.post("/signup", body);
+		} catch (e) {
+			console.log(e);
+			alert(e.response.data?.error);
+			setLoading(false);
+			return;
+		}
 		navigate("/login");
 	}
 	if (loading) return <Loading />;
@@ -69,8 +77,8 @@ function SignUp() {
 					className={error ? "error" : ""}
 					type="password"
 					placeholder="Confirme a senha"
-					name="passwordConfirm"
-					value={body.passwordConfirm}
+					name="confirmPassword"
+					value={body.confirmPassword}
 					minLength={3}
 					maxLength={15}
 					onChange={handleChange}

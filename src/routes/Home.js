@@ -2,11 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import LinkInput from "../components/LinkInput";
 import LinkList from "../components/LinkList";
+import Loading from "../components/Loading";
 import RankingBoard from "../components/RankingBoard";
 import { AuthContext } from "../contexts/authContext";
 
 function LoggedOn() {
 	const [links, setLinks] = useState([]);
+	const [loading, setLoading] = useState(true);
 	useEffect(() => {
 		setLinks([
 			{
@@ -28,7 +30,9 @@ function LoggedOn() {
 				visitCount: 998,
 			},
 		]);
+		setLoading(false);
 	}, []);
+	if (loading) return <Loading />;
 	return (
 		<>
 			<LinkInput />
@@ -49,11 +53,7 @@ function LoggedOff() {
 function Home() {
 	const { user } = useContext(AuthContext);
 	const Render = user ? <LoggedOn /> : <LoggedOff />;
-	return (
-		<HomeContainer>
-			{Render}
-		</HomeContainer>
-	);
+	return <HomeContainer>{Render}</HomeContainer>;
 }
 
 const HomeContainer = styled.div`
