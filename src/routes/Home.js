@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import LinkInput from "../components/LinkInput";
@@ -8,29 +7,13 @@ import RankingBoard from "../components/RankingBoard";
 import { AuthContext } from "../contexts/authContext";
 
 function LoggedOn() {
-	const [links, setLinks] = useState([]);
+	
 	const [loading, setLoading] = useState(true);
-	const { config } = useContext(AuthContext);
+	const { links, getData } = useContext(AuthContext);
 	useEffect(() => {
-		async function getData() {
-			try {
-				const { data } = await axios.get("/users/me", config);
-				const links = data.shortenedUrls;
-				if (links[0].id) {
-					setLinks(links);
-				} else {
-					setLinks([]);
-				}
-			} catch (e) {
-				console.log(e);
-				alert(
-					"Houve um erro ao obter os links. Por favor, atualize a página."
-				);
-			}
-		}
 		getData();
 		setLoading(false);
-	}, [config]);
+	}, [getData]);
 	if (loading) return <Loading />;
 	return (
 		<>
