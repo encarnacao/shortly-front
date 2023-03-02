@@ -36,7 +36,7 @@ function LinkItem({ id, url, code, views }) {
 				<IoIosCopy />
 			</div>
 			<div>
-				<span className="url">{url}</span>
+				<p className="url">{url}</p>
 				<span className="code">{code}</span>
 				<span className="hits">Quantidade de visitantes: {views}</span>
 			</div>
@@ -96,6 +96,13 @@ const ListItem = styled.li`
 		color: #ffffff;
 		font-size: 14px;
 		padding: 20px;
+		> p{
+			width: 100%;
+			width: 250px;
+			max-height: 16px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
 	}
 	> div:last-child {
 		width: 15%;
