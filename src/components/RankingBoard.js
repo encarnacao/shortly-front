@@ -1,43 +1,24 @@
+import axios from "axios";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import trophy from "../assets/Trophy.svg";
+import Loading from "./Loading";
 
 function RankingBoard() {
 	const [ranking, setRanking] = useState([]);
+	const [loading, setLoading] = useState(true);
 	useEffect(() => {
-		setRanking([
-			{
-				id: 1,
-				user: "Fulaninha",
-				links: 32,
-				views: 1703584,
-			},
-			{
-				id: 2,
-				user: "Ciclano",
-				links: 20,
-				views: 1113347,
-			},
-			{
-				id: 3,
-				user: "Beltrana",
-				links: 18,
-				views: 852961,
-			},
-			{
-				id: 4,
-				user: "Joaozin",
-				links: 14,
-				views: 492173,
-			},
-			{
-				id: 5,
-				user: "DEFINITIVAMENTE_NAO_E_UM_BOT",
-				links: 12345252,
-				views: 37707,
-			},
-		]);
+		async function getRanking() {
+			const result = await axios("/ranking");
+			setRanking(result.data);
+			setLoading(false);
+		}
+		getRanking();
 	}, []);
+
+	if (loading) {
+		return <Loading />;
+	}
 	return (
 		<BoardContainer>
 			<Heading>
@@ -52,11 +33,14 @@ function RankingBoard() {
 								<span className="username">
 									{i + 1}. {item.user}
 								</span>{" "}
-								- {item.links} links - {item.views}{" "}
+								- {item.linksCount} links - {item.visitCount}{" "}
 								visualizações
 							</li>
 						);
 					})}
+					{ranking.length === 0 && (
+						<h1>Ranking ainda Vazio. Comece a encurtar!</h1>
+					)}
 				</ol>
 			</Board>
 		</BoardContainer>
@@ -93,11 +77,20 @@ const Board = styled.div`
 	box-shadow: 0px 4px 24px rgba(120, 177, 89, 0.12);
 	border-radius: 24px 24px 0px 0px;
 	word-wrap: break-word;
+	position: relative;
 	> ol {
 		font-weight: 400;
 		font-size: 22px;
 		line-height: 40px;
 		padding: 20px;
+	}
+	> ol > h1 {
+		font-size: 24px;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		color: #4fa94d;
 	}
 	.username {
 		font-weight: 500;
