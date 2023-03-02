@@ -31,9 +31,9 @@ function RankingBoard() {
 						return (
 							<li key={item.id}>
 								<span className="username">
-									{i + 1}. {item.user}
+									{i + 1}. {item.name}
 								</span>{" "}
-								- {item.linksCount} links - {item.visitCount}{" "}
+								- {item.linksCount} links - {item.visitCount ?? 0}{" "}
 								visualizações
 							</li>
 						);
