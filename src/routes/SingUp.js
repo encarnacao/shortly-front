@@ -1,22 +1,26 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Loading from "../components/Loading";
 import { ConfirmButton, SignContainer, TextInput } from "../styles/FormStyles";
 
 function SignUp() {
-	const [body, setBody] = useState({ name: "", email: "", password: "" });
-	const [passwordConfirm, setPasswordConfirm] = useState("");
+	const [body, setBody] = useState({
+		name: "",
+		email: "",
+		password: "",
+		passwordConfirm: "",
+	});
 	const [error, setError] = useState("");
+	const [loading, setLoading] = useState(false);
+	const navigate = useNavigate();
 
 	function handleChange(e) {
-		if (e.target.name !== "passwordConfirm") {
-			setBody({ ...body, [e.target.name]: e.target.value });
-		} else {
-			setPasswordConfirm(e.target.value);
-		}
-		setError(false);
+		setBody({ ...body, [e.target.name]: e.target.value });
+		if (error) setError(false);
 	}
 
 	function checkError() {
-		if (body.password !== passwordConfirm) {
+		if (body.password !== body.passwordConfirm) {
 			setError(true);
 			return true;
 		}
@@ -25,10 +29,15 @@ function SignUp() {
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		if (checkError()) return;
+		setLoading(true);
+		if (checkError()) {
+			setLoading(false);
+			return;
+		}
 		console.log(body);
+		navigate("/login");
 	}
-
+	if (loading) return <Loading />;
 	return (
 		<SignContainer>
 			<form onSubmit={handleSubmit}>
@@ -52,6 +61,8 @@ function SignUp() {
 					placeholder="Senha"
 					name="password"
 					value={body.password}
+					minLength={3}
+					maxLength={15}
 					onChange={handleChange}
 				/>
 				<TextInput
@@ -59,7 +70,9 @@ function SignUp() {
 					type="password"
 					placeholder="Confirme a senha"
 					name="passwordConfirm"
-					value={passwordConfirm}
+					value={body.passwordConfirm}
+					minLength={3}
+					maxLength={15}
 					onChange={handleChange}
 				/>
 				<p className={error ? "error" : "hidden"}>
