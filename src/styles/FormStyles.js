@@ -53,6 +53,9 @@ const SignContainer = styled.div`
 		* {
 			margin-bottom: 40px;
 		}
+		> div{
+			margin-bottom: 0;
+		}
 		p.error {
 			color: #ff0000;
 			font-size: 12px;

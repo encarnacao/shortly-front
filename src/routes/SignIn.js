@@ -6,6 +6,7 @@ import { ConfirmButton, SignContainer, TextInput } from "../styles/FormStyles";
 function SignIn() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [persist, setPersist] = useState(false);
     const {setUser, setActive} = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -31,6 +32,13 @@ function SignIn() {
 					value={password}
 					onChange={(e) => setPassword(e.target.value)}
 				/>
+				<div>
+					<input
+						type="checkbox"
+						onChange={() => setPersist(!persist)}
+					/>
+					{"Permanecer conectado"}
+				</div>
 				<ConfirmButton type="submit">Entrar</ConfirmButton>
 			</form>
 		</SignContainer>
