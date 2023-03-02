@@ -4,6 +4,8 @@ import {
 	HiOutlineCheckCircle,
 	HiOutlineXCircle,
 } from "react-icons/hi2";
+
+import { IoIosCopy } from "react-icons/io";
 import { useContext, useState } from "react";
 import { AuthContext } from "../contexts/authContext";
 import { ThreeDots } from "react-loader-spinner";
@@ -31,24 +33,33 @@ function LinkItem({ id, url, code, views }) {
 	return (
 		<ListItem>
 			<div>
+				<IoIosCopy />
+			</div>
+			<div>
 				<span className="url">{url}</span>
 				<span className="code">{code}</span>
 				<span className="hits">Quantidade de visitantes: {views}</span>
 			</div>
-			<div>{loading ? <Dots /> : <>
-				<CancelIcon
-					remove={remove ? 1 : 0}
-					onClick={() => setRemove(false)}
-				/>
-				<TrashIcon
-					remove={remove ? 1 : 0}
-					onClick={() => setRemove(true)}
-				/>
-				<ConfirmIcon
-					remove={remove ? 1 : 0}
-					onClick={removeLink}
-				/>
-			</>}</div>
+			<div>
+				{loading ? (
+					<Dots />
+				) : (
+					<>
+						<CancelIcon
+							remove={remove ? 1 : 0}
+							onClick={() => setRemove(false)}
+						/>
+						<TrashIcon
+							remove={remove ? 1 : 0}
+							onClick={() => setRemove(true)}
+						/>
+						<ConfirmIcon
+							remove={remove ? 1 : 0}
+							onClick={removeLink}
+						/>
+					</>
+				)}
+			</div>
 		</ListItem>
 	);
 }
@@ -64,13 +75,24 @@ const ListItem = styled.li`
 	box-shadow: 0px 4px 24px rgba(120, 177, 89, 0.12);
 	border-radius: 12px;
 	> div:first-child {
+		background: #80cc74;
+		width: 60px;
+		height: 100%;
+		border-radius: 12px 0px 0px 12px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		> svg {
+			color: #ffffff;
+		}
+	}
+	> div:nth-child(2) {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		width: 85%;
 		height: 100%;
 		background: #80cc74;
-		border-radius: 12px 0px 0px 12px;
 		color: #ffffff;
 		font-size: 14px;
 		padding: 20px;
@@ -83,10 +105,10 @@ const ListItem = styled.li`
 		justify-content: center;
 		align-items: center;
 		border-radius: 0px 12px 12px 0px;
-		> svg {
-			font-size: 30px;
-			cursor: pointer;
-		}
+	}
+	svg {
+		font-size: 30px;
+		cursor: pointer;
 	}
 `;
 
