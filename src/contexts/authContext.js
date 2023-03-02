@@ -1,11 +1,10 @@
-import axios from "axios";
 import { createContext, useState } from "react";
 import useStickyState from "../hooks/sticky";
 
 const AuthContext = createContext({});
 
 function AuthProvider({ children }) {
-	const [user, setUser] = useState(null);
+	const [user, setUser] = useStickyState(null, "user");
 	const [token, setToken] = useStickyState("", "token");
 	const [active, setActive] = useState("Entrar");
 	const config = {
@@ -13,11 +12,13 @@ function AuthProvider({ children }) {
 			Authorization: `Bearer ${token}`,
 		},
 	};
-	async function getUser() {
-		const result = await axios.get("/users/me", config);
-		const username = result.data.name;
-		setUser(username);
-	}
+
+	const logout = () => {
+		setUser(null);
+		setToken(null);
+		localStorage.clear();
+		setActive("Entrar");
+	};
 
 	return (
 		<AuthContext.Provider
@@ -28,7 +29,7 @@ function AuthProvider({ children }) {
 				setToken,
 				setUser,
 				setActive,
-				getUser,
+				logout,
 			}}
 		>
 			{children}
