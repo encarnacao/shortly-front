@@ -17,7 +17,7 @@ function setClass(item, active) {
 }
 
 function Header() {
-	const { active, setActive, user, setUser, setToken } =
+	const { active, setActive, user, logout } =
 		useContext(AuthContext);
 	const routes = {
 		Home: "/",
@@ -34,9 +34,7 @@ function Header() {
 
 	function checkLogout(item) {
 		if (item === "Sair") {
-			setUser(null);
-			setToken(null);
-			setActive("Entrar");
+			logout();
 			navigate(routes[item]);
 		}
 	}
