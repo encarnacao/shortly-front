@@ -9,7 +9,7 @@ function Redirect() {
     const navigate = useNavigate();
     console.log(shortUrl);
     useEffect(() => {
-        window.location.href = process.env.REACT_APP_API_URL+"urls/open/"+ shortUrl;
+        window.location.href = process.env.REACT_APP_API_URL+"/urls/open/"+ shortUrl;
         setRedirect(true);
     }, [setRedirect, shortUrl, navigate]);
 	return <Loading />;
